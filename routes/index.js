@@ -20,6 +20,13 @@ const upload = require("../middleware/upload")
 //     console.log("Number")
 // res.status(200).send("message")
 // })
+app.get(endpoints.user.Home, (req, res)=>{
+try{
+res.status(200).send("Server is running")
+}catch(err){
+res.status(404).send("Not Founsds")
+}
+})
 app.post(endpoints.user.CREATE, register)
 app.post(endpoints.user.GET_BY_ID, login)
 app.get(endpoints.user.VERIFY, passport.authenticate('jwt', {session: false }), profile)
