@@ -20,7 +20,7 @@ app.use("/", routes);
 const PORT = process.env.PORT || 2100;
 const MONGO_URL = process.env.MONGO_URL;
 
-mongoose.connect("mongodb://127.0.0.1:27017/SQUPUS").then((e) => {
+mongoose.connect(MONGO_URL).then((e) => {
     console.log("connect to mongodb")
 }).catch((err) => {
     console.log("Error While Connection to MongoDB", err);
@@ -47,3 +47,4 @@ mongoose.connect("mongodb://127.0.0.1:27017/SQUPUS").then((e) => {
 app.listen(PORT, () => {
     console.log("Connect to port" + PORT)
 })
+module.exports = app
