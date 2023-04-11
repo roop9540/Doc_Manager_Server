@@ -1,0 +1,13 @@
+{
+    "user": {
+      "VERIFY": "/user/profile",
+      "GET_BY_ID": "/user/login",
+      "CREATE": "/user/register"
+    },
+    "document": {
+      "GET_ALL": "/document",
+      "CREATE": "/document",
+      "UPDATE": "/document",
+      "DELETE": "/document"
+    }
+  }
