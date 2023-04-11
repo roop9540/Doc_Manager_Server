@@ -1,13 +1,11 @@
 require("dotenv").config();
 const express = require("express")
-const cors = require("cors");
 const mongoose = require("mongoose");
 const routes = require("./routes")
 const app = express();
 // const passport = require('passport');
 
 //==================== MiddleWares ====================
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use("/uploads", express.static(__dirname + "/uploads"));
@@ -47,4 +45,4 @@ mongoose.connect(MONGO_URL).then((e) => {
 app.listen(PORT, () => {
     console.log("Connect to port" + PORT)
 })
-module.exports = app
+module.exports = app;
