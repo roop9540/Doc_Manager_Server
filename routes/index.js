@@ -3,10 +3,12 @@ const express = require("express");
 const passport = require('passport');
 const app = express();
 require('./user/passport')
-app.use(passport.initialize());
 const cookieParser = require("cookie-parser")
-app.use(cookieParser());
 const endpoints = require("../endpoints.json")
+const cors = require('cors');
+app.use(passport.initialize());
+app.use(cookieParser());
+app.use(cors());
 
 // const userRouter = require("./user");
 // const documentRouter = require("./document/document");
@@ -20,19 +22,19 @@ const upload = require("../middleware/upload")
 //     console.log("Number")
 // res.status(200).send("message")
 // })
-app.get(endpoints.user.Home, (req, res)=>{
-try{
-res.status(200).send("Server is running")
-}catch(err){
-res.status(404).send("Not Founsds")
-}
+app.get(endpoints.user.Home, (req, res) => {
+    try {
+        res.status(200).send("Server is running")
+    } catch (err) {
+        res.status(404).send("Not Founsds")
+    }
 })
 app.post(endpoints.user.CREATE, register)
 app.post(endpoints.user.GET_BY_ID, login)
-app.get(endpoints.user.VERIFY, passport.authenticate('jwt', {session: false }), profile)
+app.get(endpoints.user.VERIFY, passport.authenticate('jwt', { session: false }), profile)
 app.get(endpoints.document.GET_ALL, getDocuments)
-app.post(endpoints.document.CREATE ,upload.single("file"), postDocuments )
-app.put(endpoints.document.UPDATE,upload.single("file"), editDocument)
+app.post(endpoints.document.CREATE, upload.single("file"), postDocuments)
+app.put(endpoints.document.UPDATE, upload.single("file"), editDocument)
 app.delete(endpoints.document.DELETE, deleteDocument)
 
 // app.get('/profile', passport.authenticate('jwt', {session: false }), profile)
