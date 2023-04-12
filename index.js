@@ -19,14 +19,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use(cors());
-// console.log(__dirname + "/uploads")
+// app.use(cors());
+// // console.log(__dirname + "/uploads")
 
 
-app.use(cors({
+// app.use(cors({
 
-  origin: 'https://doc-manager-client.vercel.app'
-}));
+//   origin: 'https://doc-manager-client.vercel.app'
+// }));
 
 
 
