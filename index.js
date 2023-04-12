@@ -36,7 +36,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.use((req, res, next) => {
   console.log("Server Less Cors")
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app/");
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
