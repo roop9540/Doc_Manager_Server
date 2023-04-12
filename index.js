@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const { register ,profile, login} = require("./routes/user/user.controller");
 const { getDocuments, postDocuments, editDocument, deleteDocument } = require("./routes/document/document.controller");
 const upload = require("./middleware/upload")
+const allowCors = require("./middleware/allowCors")
 require("./routes/user/passport")
 
 // const passport = require('passport');
@@ -23,25 +24,6 @@ app.use(cors());
 // console.log(__dirname + "/uploads")
 
 
-const allowCors = fn => async (req, res) => {
-    console.log("Checking Cors")
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    // another common pattern
-    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-    if (req.method === 'OPTIONS') {
-      res.status(200).end()
-      return
-    }
-    return await fn(req, res)
-  }
-
-
 // const corsOptions = {
 //   origin: "*",
 //   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -50,33 +32,33 @@ const allowCors = fn => async (req, res) => {
 
 // app.use(cors(corsOptions));
 
-app.use((req, res, next) => {
-  console.log("Server Less Cors")
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    if (req.method == "OPTIONS") {
-      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-      return res.status(200).json({});
-    }
+// app.use((req, res, next) => {
+//   console.log("Server Less Cors")
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//     );
+//     if (req.method == "OPTIONS") {
+//       res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+//       return res.status(200).json({});
+//     }
   
-    next();
-  });
+//     next();
+//   });
 
 
-app.get("/", allowCors((req, res)=>{
+app.get("/",allowCors, (req, res)=>{
   res.status(200).send("Server is running")
-}))
+})
 
-app.post(endpoints.user.CREATE, register)
-app.post(endpoints.user.GET_BY_ID, login)
-app.get(endpoints.user.VERIFY, passport.authenticate('jwt', { session: false }), profile)
-app.get(endpoints.document.GET_ALL, getDocuments)
-app.post(endpoints.document.CREATE, upload.single("file"), postDocuments)
-app.put(endpoints.document.UPDATE, upload.single("file"), editDocument)
-app.delete(endpoints.document.DELETE, deleteDocument)
+app.post(endpoints.user.CREATE, allowCors, register)
+app.post(endpoints.user.GET_BY_ID,allowCors, login)
+app.get(endpoints.user.VERIFY,allowCors,  passport.authenticate('jwt', { session: false }), profile)
+app.get(endpoints.document.GET_ALL,allowCors, getDocuments)
+app.post(endpoints.document.CREATE,allowCors, upload.single("file"), postDocuments)
+app.put(endpoints.document.UPDATE,allowCors, upload.single("file"), editDocument)
+app.delete(endpoints.document.DELETE, allowCors, deleteDocument)
 
 
 

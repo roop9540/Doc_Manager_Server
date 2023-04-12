@@ -9,6 +9,8 @@ const passport = require('passport');
 // async function getRegister
 
  const JWT_SECRET = "mysecretkey";
+ 
+ 
 
 
 async function register(req, res) {
@@ -41,7 +43,7 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
-    allowCors(req,res);
+   
     console.log("came")
     try {
         const emailCheck = await USER.findOne({ username: req.body.username });
@@ -89,7 +91,7 @@ async function login(req, res) {
 }
 
 async function profile(req, res) {
-    allowCors(req,res);
+ 
     // console.log("request", req.headers.authorization)
 
     try{
