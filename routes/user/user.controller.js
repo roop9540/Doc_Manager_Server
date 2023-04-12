@@ -9,23 +9,6 @@ const passport = require('passport');
 // async function getRegister
 
  const JWT_SECRET = "mysecretkey";
- 
- const allowCors = fn => async (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    // another common pattern
-    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-    if (req.method === 'OPTIONS') {
-      res.status(200).end()
-      return
-    }
-    return await fn(req, res)
-  }
 
 
 async function register(req, res) {
@@ -58,6 +41,7 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
+    allowCors(req,res);
     console.log("came")
     try {
         const emailCheck = await USER.findOne({ username: req.body.username });
@@ -105,7 +89,8 @@ async function login(req, res) {
 }
 
 async function profile(req, res) {
-    console.log("request", req.headers.authorization)
+    allowCors(req,res);
+    // console.log("request", req.headers.authorization)
 
     try{
         console.log("req", req.user)
@@ -163,10 +148,6 @@ async function protected(req, res) {
         res.status(401).send("Unauthorized")
     }
      }
-
-     allowCors(register);
-     allowCors(login);
-     allowCors(profile);
 
     module.exports = { register, login, protected, profile }
 
