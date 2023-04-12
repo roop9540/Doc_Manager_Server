@@ -34,20 +34,20 @@ app.use(cors());
 
 // app.use(cors(corsOptions));
 
-app.use((req, res, next) => {
-  console.log("Server Less Cors")
-    res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app/");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    if (req.method == "OPTIONS") {
-      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-      return res.status(200).json({});
-    }
+// app.use((req, res, next) => {
+//   console.log("Server Less Cors")
+//     res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app/");
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//     );
+//     if (req.method == "OPTIONS") {
+//       res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+//       return res.status(200).json({});
+//     }
   
-    next();
-  });
+//     next();
+//   });
 
 app.get("/", (req, res)=>{
   res.status(200).send("Server is running")
