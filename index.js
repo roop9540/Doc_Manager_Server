@@ -23,7 +23,16 @@ app.use(cors());
 // console.log(__dirname + "/uploads")
 
 
+app.use(cors({
+
+  origin: 'https://doc-manager-client.vercel.app'
+}));
+
+
+
+
 app.use((req, res, next) => {
+  console.log("Server Less Cors")
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
@@ -43,6 +52,7 @@ app.get("/", (req, res) => {
         res.status(200).send("Server is running")
    
 })
+
 app.post(endpoints.user.CREATE, register)
 app.post(endpoints.user.GET_BY_ID, login)
 app.get(endpoints.user.VERIFY, passport.authenticate('jwt', { session: false }), profile)
@@ -50,6 +60,39 @@ app.get(endpoints.document.GET_ALL, getDocuments)
 app.post(endpoints.document.CREATE, upload.single("file"), postDocuments)
 app.put(endpoints.document.UPDATE, upload.single("file"), editDocument)
 app.delete(endpoints.document.DELETE, deleteDocument)
+
+
+
+// app.post(endpoints.user.CREATE, (req, res) => {
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   register(req, res);
+// });
+
+// app.post(endpoints.user.CREATE,  (req, res)=>{
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   register(req, res)} )
+// app.post(endpoints.user.GET_BY_ID, (req, res)=>{
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   login(req, res)})
+// app.get(endpoints.user.VERIFY, passport.authenticate('jwt', { session: false }), (req, res)=>{
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   profile(req, res)})
+// app.get(endpoints.document.GET_ALL,(req, res)=>{
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   getDocuments(req, res)} )
+// app.post(endpoints.document.CREATE, upload.single("file"), (req, res) => {
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   postDocuments(req, res);
+// })
+// app.put(endpoints.document.UPDATE, upload.single("file"),(req, res) => {
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   editDocument(req, res);
+// } )
+// app.delete(endpoints.document.DELETE,(req, res) => {
+//   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+//   deleteDocument(req, res);
+// } )
+
 
 // DB Connection && Starting Server
 const PORT = process.env.PORT || 2100;
