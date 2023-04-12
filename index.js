@@ -23,37 +23,33 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 // console.log(__dirname + "/uploads")
 
 
-app.use(cors({
-
-  origin: 'https://doc-manager-client.vercel.app'
-}));
 
 
 
+const corsOptions = {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
 
-app.use((req, res, next) => {
-  console.log("Server Less Cors")
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    if (req.method == "OPTIONS") {
-      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-      return res.status(200).json({});
-    }
+app.use(cors(corsOptions));
+
+// app.use((req, res, next) => {
+//   console.log("Server Less Cors")
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//     );
+//     if (req.method == "OPTIONS") {
+//       res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+//       return res.status(200).json({});
+//     }
   
-    next();
-  });
+//     next();
+//   });
 
 
-app.get("/",(req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
- (req, res) => {
-    
-        res.status(200).send("Server is running")
-   
-}})
 
 // app.post(endpoints.user.CREATE, register)
 // app.post(endpoints.user.GET_BY_ID, login)
@@ -65,6 +61,12 @@ app.get("/",(req, res) => {
 
 
 
+app.get("/",(req, res) => {
+  res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
+ (req, res) => {
+     res.status(200).send("Server is running")
+   
+}})
 app.post(endpoints.user.CREATE, (req, res) => {
   res.header("Access-Control-Allow-Origin", "https://doc-manager-client.vercel.app");
   register(req, res);
